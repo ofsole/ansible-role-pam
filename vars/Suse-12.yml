@@ -1,0 +1,44 @@
+---
+pam_d_login_template: 'login.suse12.j2'
+pam_d_sshd_template: 'sshd.suse12.j2'
+package_name: 'pam'
+vas_pam_auth_lines:
+  - 'auth  required    pam_env.so'
+  - 'auth  sufficient  pam_vas3.so create_homedir get_nonvas_pass'
+  - 'auth  requisite   pam_vas3.so echo_return'
+  - 'auth  required    pam_unix2.so use_first_pass'
+vas_pam_account_lines:
+  - 'account  sufficient  pam_vas3.so'
+  - 'account  requisite   pam_vas3.so echo_return'
+  - 'account  required    pam_unix2.so'
+vas_pam_password_lines:
+  - 'password  sufficient  pam_vas3.so'
+  - 'password  requisite   pam_vas3.so echo_return'
+  - 'password  requisite   pam_pwcheck.so nullok cracklib'
+  - 'password  required    pam_unix2.so use_authtok nullok'
+vas_pam_session_lines:
+  - 'session  required   pam_limits.so'
+  - 'session  required   pam_vas3.so create_homedir'
+  - 'session  requisite  pam_vas3.so echo_return'
+  - 'session  required   pam_unix2.so'
+  - 'session  optional   pam_umask.so'
+  - 'session  optional   pam_systemd.so'
+  - 'session  optional   pam_env.so'
+novas_pam_auth_lines:
+  - 'auth  required  pam_env.so'
+  - 'auth  required  pam_unix2.so'
+novas_pam_account_lines:
+  - 'account  required  pam_unix2.so'
+novas_pam_password_lines:
+  - 'password  required  pam_pwcheck.so nullok cracklib'
+  - 'password  required  pam_unix2.so nullok use_authtok'
+novas_pam_session_lines:
+  - 'session  required  pam_limits.so'
+  - 'session  required  pam_unix2.so'
+  - 'session  optional  pam_umask.so'
+  - 'session  optional  pam_systemd.so'
+  - 'session  optional  pam_env.so'
+pam_auth_lines: {{ vas_pam_auth_lines if ensure_vas == 'present' else novas_pam_auth_lines }}
+pam_account_lines: {{ vas_pam_account_lines if ensure_vas == 'present' else novas_pam_account_lines }}
+pam_password_lines: {{ vas_pam_password_lines if ensure_vas == 'present' else novas_pam_password_lines }}
+pam_session_lines: {{ vas_pam_session_lines if ensure_vas == 'present' else novas_pam_session_lines }}

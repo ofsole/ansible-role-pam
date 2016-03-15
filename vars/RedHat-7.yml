@@ -1,0 +1,58 @@
+---
+pam_d_login_template: 'login.el7.j2'
+pam_d_sshd_template: 'sshd.el7.j2'
+package_name: 'pam'
+vas4_pam_auth_lines:
+  - 'auth        required      pam_env.so'
+  - 'auth        sufficient    pam_vas3.so show_lockout_msg get_nonvas_pass'
+  - 'auth        requisite     pam_vas3.so echo_return'
+  - 'auth        sufficient    pam_unix.so nullok try_first_pass use_first_pass'
+  - 'auth        requisite     pam_succeed_if.so uid >= 1000 quiet_success'
+  - 'auth        required      pam_deny.so'
+vas_pam_account_lines:
+  - 'account     sufficient    pam_vas3.so'
+  - 'account     requisite     pam_vas3.so echo_return'
+  - 'account     required      pam_unix.so'
+  - 'account     sufficient    pam_localuser.so'
+  - 'account     sufficient    pam_succeed_if.so uid < 1000 quiet'
+  - 'account     required      pam_permit.so'
+vas_pam_password_lines:
+  - 'password    requisite     pam_pwquality.so try_first_pass local_users_only retry=3 authtok_type='
+  - 'password    sufficient    pam_vas3.so'
+  - 'password    requisite     pam_vas3.so echo_return'
+  - 'password    sufficient    pam_unix.so md5 shadow nullok try_first_pass use_authtok'
+  - 'password    required      pam_deny.so'
+vas_pam_session_lines:
+  - 'session     optional      pam_keyinit.so revoke'
+  - 'session     required      pam_limits.so'
+  - '-session    optional      pam_systemd.so'
+  - 'session     [success=1 default=ignore] pam_succeed_if.so service in crond quiet use_uid'
+  - 'session     required      pam_vas3.so show_lockout_msg'
+  - 'session     requisite     pam_vas3.so echo_return'
+  - 'session     required      pam_unix.so'
+novas_pam_auth_lines:
+  - 'auth        required      pam_env.so'
+  - 'auth        sufficient    pam_fprintd.so'
+  - 'auth        sufficient    pam_unix.so nullok try_first_pass'
+  - 'auth        requisite     pam_succeed_if.so uid >= 1000 quiet_success'
+  - 'auth        required      pam_deny.so'
+novas_pam_account_lines:
+  - 'account     required      pam_unix.so'
+  - 'account     sufficient    pam_localuser.so'
+  - 'account     sufficient    pam_succeed_if.so uid < 1000 quiet'
+  - 'account     required      pam_permit.so'
+novas_pam_password_lines:
+  - 'password    requisite     pam_pwquality.so try_first_pass local_users_only retry=3 authtok_type='
+  - 'password    sufficient    pam_unix.so sha512 shadow nullok try_first_pass use_authtok'
+  - 'password    required      pam_deny.so'
+novas_pam_session_lines:
+  - 'session     optional      pam_keyinit.so revoke'
+  - 'session     required      pam_limits.so'
+  - '-session    optional      pam_systemd.so'
+  - 'session     [success=1 default=ignore] pam_succeed_if.so service in crond quiet use_uid'
+  - 'session     required      pam_unix.so'
+pam_auth_lines_real: {'4': 'vas4_pam_auth_lines'}
+pam_auth_lines: {{ pam_auth_lines_real[vas_major_version] |  default("Pam is only supported with vas_major_version 4 on RL7") if ensure_vas == 'present' else novas_pam_auth_lines }}
+pam_account_lines: {{ vas_pam_account_lines if ensure_vas == 'present' else novas_pam_account_lines }}
+pam_password_lines: {{ vas_pam_password_lines if ensure_vas == 'present' else novas_pam_password_lines }}
+pam_session_lines: {{ vas_pam_session_lines if ensure_vas == 'present' else novas_pam_session_lines }}

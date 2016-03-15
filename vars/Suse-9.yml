@@ -1,0 +1,18 @@
+---
+pam_d_login_template: 'login.suse9.j2'
+pam_d_sshd_template: 'sshd.suse9.j2'
+package_name:
+  - 'pam'
+  - 'pam_modules'
+pam_auth_lines:
+  - 'auth  required  pam_warn.so'
+  - 'auth  required  pam_unix2.so'
+pam_account_lines:
+  - 'account  required  pam_warn.so'
+  - 'account  required  pam_unix2.so'
+pam_password_lines:
+  - 'password  required  pam_warn.so'
+  - 'password  required  pam_pwcheck.so use_cracklib'
+pam_session_lines:
+  - 'session  required  pam_warn.so'
+  - 'session  required  pam_unix2.so debug'

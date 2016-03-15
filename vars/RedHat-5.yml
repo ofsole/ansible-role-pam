@@ -1,0 +1,72 @@
+---
+pam_d_login_template: 'login.el5.j2'
+pam_d_sshd_template: 'sshd.el5.j2'
+package_name:
+  - pam
+  - util-linux
+
+vas3_pam_auth_lines:
+  - 'auth        required      pam_env.so'
+  - 'auth        sufficient    pam_vas3.so show_lockout_msg get_nonvas_pass store_creds'
+  - 'auth        requisite     pam_vas3.so echo_return'
+  - 'auth        sufficient    pam_unix.so nullok try_first_pass use_first_pass'
+  - 'auth        requisite     pam_succeed_if.so uid >= 500 quiet'
+  - 'auth        required      pam_deny.so'
+
+vas4_pam_auth_lines:
+  - 'auth        required      pam_env.so'
+  - 'auth        sufficient    pam_vas3.so show_lockout_msg get_nonvas_pass'
+  - 'auth        requisite     pam_vas3.so echo_return'
+  - 'auth        sufficient    pam_unix.so nullok try_first_pass use_first_pass'
+  - 'auth        requisite     pam_succeed_if.so uid >= 500 quiet'
+  - 'auth        required      pam_deny.so'
+
+vas_pam_account_lines:
+  - 'account     sufficient    pam_vas3.so'
+  - 'account     requisite     pam_vas3.so echo_return'
+  - 'account     required      pam_unix.so'
+  - 'account     sufficient    pam_succeed_if.so uid < 500 quiet'
+  - 'account     required      pam_permit.so'
+
+vas_pam_password_lines:
+  - 'password    sufficient    pam_vas3.so'
+  - 'password    requisite     pam_vas3.so echo_return'
+  - 'password    requisite     pam_cracklib.so try_first_pass retry=3 type='
+  - 'password    sufficient    pam_unix.so md5 shadow nullok try_first_pass use_authtok'
+  - 'password    required      pam_deny.so'
+
+vas_pam_session_lines:
+  - 'session     optional      pam_keyinit.so revoke'
+  - 'session     required      pam_limits.so'
+  - 'session     [success=1 default=ignore] pam_succeed_if.so service in crond quiet use_uid'
+  - 'session     required      pam_vas3.so show_lockout_msg'
+  - 'session     requisite     pam_vas3.so echo_return'
+  - 'session     required      pam_unix.so'
+
+novas_pam_auth_lines:
+  - 'auth        required      pam_env.so'
+  - 'auth        sufficient    pam_unix.so nullok try_first_pass'
+  - 'auth        requisite     pam_succeed_if.so uid >= 500 quiet'
+  - 'auth        required      pam_deny.so'
+
+novas_pam_account_lines:
+  - 'account     required      pam_unix.so'
+  - 'account     sufficient    pam_succeed_if.so uid < 500 quiet'
+  - 'account     required      pam_permit.so'
+
+novas_pam_password_lines:
+  - 'password    requisite     pam_cracklib.so try_first_pass retry=3'
+  - 'password    sufficient    pam_unix.so md5 shadow nullok try_first_pass use_authtok'
+  - 'password    required      pam_deny.so'
+
+novas_pam_session_lines:
+  - 'session     optional      pam_keyinit.so revoke'
+  - 'session     required      pam_limits.so'
+  - 'session     [success=1 default=ignore] pam_succeed_if.so service in crond quiet use_uid'
+  - 'session     required      pam_unix.so'
+
+pam_auth_lines_real: {'3':'vas3_pam_auth_lines', '4':'vas4_pam_auth_lines'}
+pam_auth_lines: {{ pam_auth_lines_real[vas_major_version] |  default("Pam is only supported with vas_major_version 3 or 4") if ensure_vas == 'present' else novas_pam_auth_lines }}
+pam_account_lines: {{ vas_pam_account_lines if ensure_vas == 'present' else novas_pam_account_lines }}
+pam_password_lines: {{ vas_pam_password_lines if ensure_vas == 'present' else novas_pam_password_lines }}
+pam_session_lines: {{ vas_pam_session_lines if ensure_vas == 'present' else novas_pam_session_lines }}
