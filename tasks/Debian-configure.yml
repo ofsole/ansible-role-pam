@@ -1,0 +1,41 @@
+---
+
+- name: pam_common_auth configure on debian
+  template:
+    dest: "{{common_auth_file}}"
+    src: 'common-auth-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+
+- name: pam_common_account configure on debian
+  template:
+    dest: "{{common_account_file}}"
+    src: 'common-account-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+
+- name: pam_common_password configure on debian
+  template:
+    dest: "{{common_password_file}}"
+    src: 'common-password-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+
+- name: pam_common_noninteractive_session configure on debian
+  template:
+    dest: "{{common_session_noninteractive_file}}"
+    src: 'common-session-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+
+- name: pam_common_session configure on debian
+  template:
+    dest: "{{common_session_file}}"
+    src: 'common-session-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'

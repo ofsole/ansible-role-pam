@@ -7,4 +7,38 @@
 - name: include nsswitch
   include: ../../nsswitch/tasks/main.yml
 
+- name: include accesslogin
+  include: accesslogin.yml
+
+- name: include limits
+  include: limits.yml
+
+- name: install package for redhat
+  yum: name="{{package_name}}"
+  when: ansible_os_family == 'RedHat'
+- name: install package for suse
+  zypper: name="{{package_name}}"
+  when: ansible_os_family == 'Suse'
+- name: install package for ubuntu
+  apt: name="{{package_name}}"
+  when: ansible_os_family == 'Debian'
+
+- name: pam_d_login configure
+  template:
+    dest: "{{pam_d_login_path}}"
+    src: "{{pam_d_login_template}}"
+    owner: "{{pam_d_login_owner}}"
+    group: "{{pam_d_login_group}}"
+    mode: "{{pam_d_login_mode}}"
+
+- name: pam_d_sshd configure
+  template:
+    dest: "{{pam_d_sshd_path}}"
+    src: "{{pam_d_sshd_template}}"
+    owner: "{{pam_d_sshd_owner}}"
+    group: "{{pam_d_sshd_group}}"
+    mode: "{{pam_d_sshd_mode}}"
+
+- name: os configure
+  inlcude: "{{ ansible_os_family }}-configure.yml"
 

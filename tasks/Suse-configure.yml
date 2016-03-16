@@ -1,0 +1,190 @@
+---
+
+- name: pam_other configure on suse9
+  template:
+    dest: "{{pam_d_other_file}}"
+    src: 'pam.conf.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+  when: ansible_distribution_version == '9'
+
+- name: configure pam on suse10 (1)
+  template:
+    dest: "{{common_auth_file}}"
+    src: 'common-auth-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+  when: ansible_distribution_version == '10'
+
+- name: configure pam on suse10 (2)
+  template:
+    dest: "{{pam_common_account}}"
+    src: 'common-account-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+  when: ansible_distribution_version == '10'
+
+- name: configure pam on suse10 (3)
+  template:
+    dest: "{{common_password_file}}"
+    src: 'common-password-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+  when: ansible_distribution_version == '10'
+
+- name: configure pam on suse10 (4)
+  template:
+    dest: "{{common_session_file}}"
+    src: 'common-session-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+  when: ansible_distribution_version == '10'
+
+- name: configure pam on suse11 (1)
+  template:
+    dest: "{{common_auth_pc_file}}"
+    src: 'common-auth-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+  when: ansible_distribution_version == '11'
+
+- name: configure pam on suse11 (2)
+  template:
+    dest: "{{common_account_pc_file}}"
+    src: 'common-account-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+  when: ansible_distribution_version == '11'
+
+- name: configure pam on suse11 (3)
+  template:
+    dest: "{{common_password_pc_file}}"
+    src: 'common-password-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+  when: ansible_distribution_version == '11'
+
+- name: configure pam on suse11 (4)
+  template:
+    dest: "{{common_session_pc_file}}"
+    src: 'common-session-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+  when: ansible_distribution_version == '11'
+
+- name: configure pam on suse11 (5)
+  file:
+    state: link
+    src: "{{common_session_pc_file}}"
+    dest: "{{common_session_file}}"
+    owner: 'root'
+    group: 'root'
+  when: ansible_distribution_version == '11'
+
+- name: configure pam on suse11 (6)
+  file:
+    state: link
+    src: "{{common_password_pc_file}}"
+    dest: "{{common_password_file}}"
+    owner: 'root'
+    group: 'root'
+  when: ansible_distribution_version == '11'
+
+- name: configure pam on suse11 (7)
+  file:
+    state: link
+    src: "{{common_account_pc_file}}"
+    dest: "{{common_account_file}}"
+    owner: 'root'
+    group: 'root'
+  when: ansible_distribution_version == '11'
+
+- name: configure pam on suse11 (8)
+  file:
+    state: link
+    src: "{{common_auth_pc_file}}"
+    dest: "{{common_auth_file}}"
+    owner: 'root'
+    group: 'root'
+  when: ansible_distribution_version == '11'
+
+- name: configure pam on suse12&&13 (1)
+  template:
+    dest: "{{common_auth_pc_file}}"
+    src: 'common-auth-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+  when: (ansible_distribution_version == '12') or (ansible_distribution_version == '13')
+
+- name: configure pam on suse12&&13 (2)
+  template:
+    dest: "{{common_account_pc_file}}"
+    src: 'common-account-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+  when: (ansible_distribution_version == '12') or (ansible_distribution_version == '13')
+
+- name: configure pam on suse12&&13 (3)
+  template:
+    dest: "{{common_password_pc_file}}"
+    src: 'common-password-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+  when: (ansible_distribution_version == '12') or (ansible_distribution_version == '13')
+
+- name: configure pam on suse12&&13 (4)
+  template:
+    dest: "{{common_session_pc_file}}"
+    src: 'common-session-pc.j2'
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+  when: (ansible_distribution_version == '12') or (ansible_distribution_version == '13')
+
+- name: configure pam on suse12&&13 (5)
+  file:
+    state: link
+    src: "{{common_session_pc_file}}"
+    dest: "{{common_session_file}}"
+    owner: 'root'
+    group: 'root'
+  when: (ansible_distribution_version == '12') or (ansible_distribution_version == '13')
+
+- name: configure pam on suse12&&13 (6)
+  file:
+    state: link
+    src: "{{common_password_pc_file}}"
+    dest: "{{common_password_file}}"
+    owner: 'root'
+    group: 'root'
+  when: (ansible_distribution_version == '12') or (ansible_distribution_version == '13')
+
+- name: configure pam on suse12&&13 (7)
+  file:
+    state: link
+    src: "{{common_account_pc_file}}"
+    dest: "{{common_account_file}}"
+    owner: 'root'
+    group: 'root'
+  when: (ansible_distribution_version == '12') or (ansible_distribution_version == '13')
+
+- name: configure pam on suse12&&13 (8)
+  file:
+    state: link
+    src: "{{common_auth_pc_file}}"
+    dest: "{{common_auth_file}}"
+    owner: 'root'
+    group: 'root'
+  when: (ansible_distribution_version == '12') or (ansible_distribution_version == '13')

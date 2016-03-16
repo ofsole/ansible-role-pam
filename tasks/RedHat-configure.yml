@@ -1,0 +1,16 @@
+---
+- name: pam_system_auth_ac configure
+  template:
+    dest: "{{system_auth_ac_file}}"
+    src: system-auth-ac.j2
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+
+- name: pam_system_auth configure
+  file:
+    src: "{{system_auth_ac_file}}"
+    dest: "{{system_auth_file}}"
+    owner: 'root'
+    group: 'root'
+    state: 'link'

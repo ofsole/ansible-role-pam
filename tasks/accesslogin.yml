@@ -1,0 +1,9 @@
+---
+
+- name: configure access.conf file default in /etc/security/access.conf
+  template:
+    src: "{{access_conf_template}}"
+    dest: "{{access_conf_path}}"
+    owner: "{{access_conf_owner}}"
+    group: "{{access_conf_group}}"
+    mode: "{{access_conf_mode}}"
