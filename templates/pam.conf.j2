@@ -1,0 +1,21 @@
+# This file is being maintained by Ansible.
+# DO NOT EDIT
+# Auth
+{% for auth_line in pam_auth_lines %}
+{{ auth_line }}
+{% endfor %}
+
+# Account
+{% for account_line in pam_account_lines %}
+{{ account_line }}
+{% endfor %}
+
+#Password
+{% for password_line in pam_password_lines %}
+{{ password_line }}
+{% endfor %}
+
+# Session
+{% for session_line in pam_session_lines %}
+{{ session_line }}
+{% endfor %}

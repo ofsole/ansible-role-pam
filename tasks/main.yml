@@ -7,6 +7,14 @@
 - name: include nsswitch
   include: ../../nsswitch/tasks/main.yml
 
+- name: include services when not empty
+  include: service.yml
+  when: services != ""
+
+- name: include limits_fragments
+  include: fragment.yml
+  when: limits_fragments != ""
+
 - name: include accesslogin
   include: accesslogin.yml
 

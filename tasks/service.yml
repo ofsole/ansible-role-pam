@@ -1,0 +1,20 @@
+---
+
+- name: configure pam.d-service file
+  template:
+    src: 'service.j2'
+    dest: "{{pam_config_dir}}/{{item.key}}"
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+  with_dict: "{{services}}"
+  when: item.value.content is not defined
+
+  inlinefile:
+    dest: "{{pam_config_dir}}/{{item.key}}"
+    owner: 'root'
+    group: 'root'
+    mode: '644'
+    line: "{{item.value.content}}"
+  with_dict: "{{services}}"
+  when: item.value.content is defined
