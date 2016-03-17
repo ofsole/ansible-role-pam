@@ -1,8 +1,5 @@
 ---
 
-- name: include limits.conf file
-  include: limits.yml
-
 - fail: msg="You can not use limits together with Suse 10.x releases"
   when: ansible_distribution_major_version == '10'
 
