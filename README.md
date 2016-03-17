@@ -1,6 +1,8 @@
 Ansible-role-pam
 =========
 
+[![Build Status](https://travis-ci.org/ofsole/ansible-role-pam.png?branch=master)](https://travis-ci.org/ofsole/ansible-role-pam)
+
 This role manages pam on RedHat, Suse and Ubuntu
 
 Requirements
