@@ -1,7 +1,7 @@
-Role Name
+Ansible-role-pam
 =========
 
-A brief description of the role goes here.
+This role manages pam on RedHat, Suse and Ubuntu
 
 Requirements
 ------------
@@ -11,12 +11,56 @@ Any pre-requisites that may not be covered by Ansible itself or the role should 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Here is a list of all the default variables for this role, which are also available in `defaults/main.yml`.
+```
+# defaults file for ansible-role-pam
+config_file: '/etc/security/limits.conf'
+config_file_mode: 640
+limits_d_dir: '/etc/security/limits.d'
+limits_d_dir_mode: 750
+config_file_lines: []
+allowed_users: 'root'
+login_pam_access: 'required'
+sshd_pam_access: 'required'
+ensure_vas: 'absent'
+pam_conf_file: '/etc/pam.conf'
+pam_d_login_path: '/etc/pam.d/login'
+pam_d_login_owner: 'root'
+pam_d_login_group: 'root'
+pam_d_login_mode: 644
+pam_d_sshd_path: '/etc/pam.d/sshd'
+pam_d_sshd_owner: 'root'
+pam_d_sshd_group: 'root'
+pam_d_sshd_mode: 644
+pam_d_other_file: '/etc/pam.d/other'
+common_auth_file: '/etc/pam.d/common-auth'
+common_auth_pc_file: '/etc/pam.d/common-auth-pc'
+common_account_file: '/etc/pam.d/common-account'
+common_account_pc_file: '/etc/pam.d/common-account-pc'
+common_password_file: '/etc/pam.d/common-password'
+common_password_pc_file: '/etc/pam.d/common-password-pc'
+common_session_file: '/etc/pam.d/common-session'
+common_session_pc_file: '/etc/pam.d/common-session-pc'
+common_session_noninteractive_file: '/etc/pam.d/common-session-noninteractive'
+system_auth_file: '/etc/pam.d/system-auth'
+system_auth_ac_file: '/etc/pam.d/system-auth-ac'
+vas_major_version: '4'
+allowed_users: 'root'
+pam_d_login_oracle_options: 'UNSET'
+_services: {}
+limits_fragments: ""
+#for accesslogin.yml file
+access_conf_path: '/etc/security/access.conf'
+access_conf_owner: 'root'
+access_conf_group: 'root'
+access_conf_mode: '644'
+access_conf_template: 'access.conf.j2'
+```
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+ansible-role-nsswitch
 
 Example Playbook
 ----------------
@@ -25,7 +69,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: ansible-role-pam, ensure_vas: present }
 
 License
 -------
@@ -35,4 +79,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Elvis Cai
