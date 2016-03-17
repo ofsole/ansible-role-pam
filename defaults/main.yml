@@ -34,7 +34,7 @@ vas_major_version: '4'
 allowed_users: 'root'
 pam_d_login_oracle_options: 'UNSET'
 _services: {}
-limits_fragments: ""
+limits_fragments: {}
 #for accesslogin.yml file
 access_conf_path: '/etc/security/access.conf'
 access_conf_owner: 'root'
