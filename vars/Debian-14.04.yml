@@ -47,7 +47,7 @@ novas_pam_session_lines:
   - 'session optional      pam_umask.so'
   - 'session required      pam_unix.so'
   - 'session optional      pam_systemd.so'
-pam_auth_lines: {{ vas_pam_auth_lines if ensure_vas == 'present' else novas_pam_auth_lines }}
-pam_account_lines: {{ vas_pam_account_lines if ensure_vas == 'present' else novas_pam_account_lines }}
-pam_password_lines: {{ vas_pam_password_lines if ensure_vas == 'present' else novas_pam_password_lines }}
-pam_session_lines: {{ vas_pam_session_lines if ensure_vas == 'present' else novas_pam_session_lines }}
+pam_auth_lines: "{{ vas_pam_auth_lines if ensure_vas == 'present' else novas_pam_auth_lines }}"
+pam_account_lines: "{{ vas_pam_account_lines if ensure_vas == 'present' else novas_pam_account_lines }}"
+pam_password_lines: "{{ vas_pam_password_lines if ensure_vas == 'present' else novas_pam_password_lines }}"
+pam_session_lines: "{{ vas_pam_session_lines if ensure_vas == 'present' else novas_pam_session_lines }}"

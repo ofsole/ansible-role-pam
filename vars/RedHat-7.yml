@@ -52,7 +52,7 @@ novas_pam_session_lines:
   - 'session     [success=1 default=ignore] pam_succeed_if.so service in crond quiet use_uid'
   - 'session     required      pam_unix.so'
 pam_auth_lines_real: {'4': 'vas4_pam_auth_lines'}
-pam_auth_lines: {{ pam_auth_lines_real[vas_major_version] |  default("Pam is only supported with vas_major_version 4 on RL7") if ensure_vas == 'present' else novas_pam_auth_lines }}
-pam_account_lines: {{ vas_pam_account_lines if ensure_vas == 'present' else novas_pam_account_lines }}
-pam_password_lines: {{ vas_pam_password_lines if ensure_vas == 'present' else novas_pam_password_lines }}
-pam_session_lines: {{ vas_pam_session_lines if ensure_vas == 'present' else novas_pam_session_lines }}
+pam_auth_lines: "{{ pam_auth_lines_real[vas_major_version] |  default("Pam is only supported with vas_major_version 4 on RL7") if ensure_vas == 'present' else novas_pam_auth_lines }}"
+pam_account_lines: "{{ vas_pam_account_lines if ensure_vas == 'present' else novas_pam_account_lines }}"
+pam_password_lines: "{{ vas_pam_password_lines if ensure_vas == 'present' else novas_pam_password_lines }}"
+pam_session_lines: "{{ vas_pam_session_lines if ensure_vas == 'present' else novas_pam_session_lines }}"
