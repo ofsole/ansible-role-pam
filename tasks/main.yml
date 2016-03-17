@@ -4,22 +4,19 @@
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}-{{ansible_distribution_version}}.yml"
 
-- name: include nsswitch
-  include: ../../nsswitch/tasks/main.yml
-
 - name: include services when not empty
   include: service.yml
-  when: services != ""
-
-- name: include limits_fragments
-  include: fragment.yml
-  when: limits_fragments != ""
-
-- name: include accesslogin
-  include: accesslogin.yml
+  when: _services
 
 - name: include limits
   include: limits.yml
+
+- name: include limits_fragments
+  include: fragment.yml
+  when: limits_fragments
+
+- name: include accesslogin
+  include: accesslogin.yml
 
 - name: install package for redhat
   yum: name="{{package_name}}"
@@ -47,6 +44,11 @@
     group: "{{pam_d_sshd_group}}"
     mode: "{{pam_d_sshd_mode}}"
 
-- name: os configure
-  inlcude: "{{ ansible_os_family }}-configure.yml"
+- include:  RedHat-configure.yml
+  when:  ansible_os_family == 'RedHat'
 
+- include:  Debian-configure.yml
+  when:  ansible_os_family == 'Debian'
+
+- include:  Suse-configure.yml
+  when:  ansible_os_family == 'Suse'

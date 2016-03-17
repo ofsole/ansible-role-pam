@@ -7,14 +7,14 @@
     owner: 'root'
     group: 'root'
     mode: '644'
-  with_dict: "{{services}}"
+  with_dict: "{{_services | default({})}}"
   when: item.value.content is not defined
 
-  inlinefile:
+- lineinfile:
     dest: "{{pam_config_dir}}/{{item.key}}"
     owner: 'root'
     group: 'root'
     mode: '644'
     line: "{{item.value.content}}"
-  with_dict: "{{services}}"
+  with_dict: "{{_services | default({})}}"
   when: item.value.content is defined

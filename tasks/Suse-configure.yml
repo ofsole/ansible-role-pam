@@ -1,5 +1,4 @@
 ---
-
 - name: pam_other configure on suse9
   template:
     dest: "{{pam_d_other_file}}"

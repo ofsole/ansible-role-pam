@@ -3,16 +3,16 @@
 #
 
 # allow only the groups listed
-{% if allowed_users is mapping %}
-{%  for key, values in allowed_users %}
-+ : {{key}} : {% if values is iterable %}{{ value | join(" ") }}{% elif values is string %}{{values}}{% else %}ALL{% endif %}
-{% endfor %}
-{% elif allowed_users is iterable %}
-{% for key in allowed_users %}
-+ : {% key %} : ALL
-{% endfor %}
-{% elif allowed_users is string %}
-+ : {% allowed_users %} : ALL
+{#{% if allowed_users is mapping %}
+#{%  for key, values in allowed_users %}
+#+ : {{key}} : {% if values is iterable %}{{ value | join(" ") }}{% elif values is string %}{{values}}{% else %}ALL{% endif %}
+#{% endfor %}
+#{% elif allowed_users is iterable %}
+#{% for key in allowed_users %}
+#+ : {{ key }} : ALL
+#{% endfor %}#}
+{% if allowed_users is string %}
++ : {{ allowed_users }} : ALL
 {% else %}
 + : root : ALL
 {% endif %}

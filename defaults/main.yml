@@ -33,7 +33,7 @@ system_auth_ac_file: '/etc/pam.d/system-auth-ac'
 vas_major_version: '4'
 allowed_users: 'root'
 pam_d_login_oracle_options: 'UNSET'
-services: ""
+_services: {}
 limits_fragments: ""
 #for accesslogin.yml file
 access_conf_path: '/etc/security/access.conf'
