@@ -9,7 +9,7 @@
 #+ : {{key}} : {% if values is iterable %}{{ value | join(" ") }}{% elif values is string %}{{values}}{% else %}ALL{% endif %}
 #{% endfor %}
 #}
-{% if allowed_users is iterable %}
+{% if allowed_users | list  %}
 {% for key in allowed_users %}
 + : {{ key }} : ALL
 {% endfor %}

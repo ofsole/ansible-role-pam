@@ -5,7 +5,10 @@ config_file_mode: 640
 limits_d_dir: '/etc/security/limits.d'
 limits_d_dir_mode: 750
 config_file_lines: []
-allowed_users: 'root'
+allowed_users:
+  - root
+  - cnshadm
+  - ALL
 login_pam_access: 'required'
 sshd_pam_access: 'required'
 ensure_vas: 'absent'
