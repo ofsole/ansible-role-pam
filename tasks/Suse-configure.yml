@@ -159,6 +159,7 @@
     dest: "{{common_session_file}}"
     owner: 'root'
     group: 'root'
+    force: yes
   when: (ansible_distribution_version == '12') or (ansible_distribution_version == '13')
 
 - name: configure pam on suse12&&13 (6)
@@ -168,6 +169,7 @@
     dest: "{{common_password_file}}"
     owner: 'root'
     group: 'root'
+    force: yes
   when: (ansible_distribution_version == '12') or (ansible_distribution_version == '13')
 
 - name: configure pam on suse12&&13 (7)
@@ -177,6 +179,7 @@
     dest: "{{common_account_file}}"
     owner: 'root'
     group: 'root'
+    force: yes
   when: (ansible_distribution_version == '12') or (ansible_distribution_version == '13')
 
 - name: configure pam on suse12&&13 (8)
@@ -186,4 +189,5 @@
     dest: "{{common_auth_file}}"
     owner: 'root'
     group: 'root'
+    force: yes
   when: (ansible_distribution_version == '12') or (ansible_distribution_version == '13')
