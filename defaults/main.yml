@@ -34,7 +34,6 @@ common_session_noninteractive_file: '/etc/pam.d/common-session-noninteractive'
 system_auth_file: '/etc/pam.d/system-auth'
 system_auth_ac_file: '/etc/pam.d/system-auth-ac'
 vas_major_version: '4'
-allowed_users: 'root'
 pam_d_login_oracle_options: 'UNSET'
 _services: {}
 limits_fragments: {}
